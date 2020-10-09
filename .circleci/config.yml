@@ -63,17 +63,17 @@ jobs:
           paths:
             - vendor
       - restore_cache:
-        key: npm-v1-{{ checksum"package-lock.json" }}
+          key: npm-v1-{{ checksum"package-lock.json" }}
       - run:
-        name: npm ci
-        command: |
-          if [ ! -d node_modules ]; then
-            npm ci
-          fi
+          name: npm ci
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            fi
       - save_cache:
-        key: npm-v1-{{ checksum "package-lock.json" }}
-        paths:
-          - node_modules
+          key: npm-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
       - run: npm run prod
       - run:
           name: archive artifacts
@@ -91,7 +91,7 @@ jobs:
             --s3-location bucket=${AWS_S3_BUCKET_NAME},key=laravel-ci.zip,bundleType=zip
 
 orbs:
-  aws-cli: circleci/aws-cli@1.0.0.
+  aws-cli: circleci/aws-cli@1.0.0
 workflows:
   version: 2
   build_deploy:
